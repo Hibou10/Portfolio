@@ -1,5 +1,15 @@
 $primary-color: #444;
 $secondary-color: #eece1a;
+$show-home-image: true;
+$home-image: url();
+
+// color: Only the text color will transition.
+// 1.5s: The transition duration is 1.5 seconds.
+//ease-out: The transition will start fast and then slow down toward the end.
+
+@mixin easOut {
+    transition: color 2s ease-out;
+}
 
 * {
     box-sizing: border-box;
@@ -62,11 +72,16 @@ main {
 
             &:hover {
                 color: $secondary-color;
-                // color: Only the text color will transition.
-                // 1.5s: The transition duration is 1.5 seconds.
-                //ease-out: The transition will start fast and then slow down toward the end.
-                transition: color 2s ease-out;
+                @include easOut;
+
             }
+        }
+    }
+
+    &#home {
+        overflow: hidden;
+        h1 {
+            margin-top: 20vh;
         }
     }
 }
