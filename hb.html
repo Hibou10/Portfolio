@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hicham Boulaayad · Data Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1115;
+      --surface: rgba(18,20,24,.72);
+      --border: #3a3a3a;
+      --text: #f3f4f6;
+      --muted: #b5b5b5;
+      --accent: #ffffff;
+      --accent2: #c9c9c9;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    /* ── DARK MODE (default) ── */
+    body {
+      background:
+        linear-gradient(rgba(0,0,0,.72), rgba(0,0,0,.72)),
+        url("new-york-city-usa.jpg") center center / cover no-repeat fixed;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      transition: color .3s ease;
+    }
+
+    /* ── LIGHT MODE ── */
+    body.light {
+      --surface: rgba(255,255,255,.55);
+      --border: rgba(0,0,0,.15);
+      --text: #111111;
+      --muted: #444444;
+      --accent: #111111;
+      --accent2: #333333;
+
+      /* gleiche Bild, hellere Überlagerung */
+      background:
+        linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.55)),
+        url("new-york-city-usa.jpg") center center / cover no-repeat fixed;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 70px;
+      background: rgba(15,17,21,.35);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    body.light nav {
+      background: rgba(255,255,255,.35);
+      border-bottom: 1px solid rgba(0,0,0,.1);
+    }
+    .nav-logo { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── THEME TOGGLE ── */
+    #theme-toggle {
+      background: none; border: none; color: var(--text);
+      cursor: pointer; font-size: 20px; padding: 0; transition: transform .3s;
+    }
+    #theme-toggle:hover { transform: scale(1.15); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      max-width: 900px; margin: 0 auto;
+      padding: 120px 70px 80px;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 0.95; font-weight: 300;
+      color: white;
+      margin-bottom: 1.75rem;
+    }
+    body.light .hero h1 { color: #111; }
+
+    .hero h1 span { color: #d8d8d8; }
+    body.light .hero h1 span { color: #444; }
+
+    .hero-sub {
+      color: #c4c4c4;
+      font-size: 1.05rem; max-width: 560px;
+      line-height: 1.7; margin-bottom: 2rem; font-weight: 300;
+    }
+    body.light .hero-sub { color: #333; }
+
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem; }
+    .chip {
+      border: 1px solid rgba(255,255,255,.25);
+      color: #d4d4d4;
+      background: rgba(255,255,255,.07);
+      padding: 8px 18px; border-radius: 6px;
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em;
+      transition: background 0.3s, color 0.3s; cursor: default;
+    }
+    .chip:hover { background: white; color: #111; }
+    body.light .chip {
+      border: 1px solid rgba(0,0,0,.2);
+      color: #222;
+      background: rgba(0,0,0,.06);
+    }
+    body.light .chip:hover { background: #111; color: #fff; }
+
+    .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border-radius: 6px; font-size: 0.875rem; font-weight: 500;
+      text-decoration: none; transition: all 0.2s; cursor: pointer;
+    }
+    .btn-primary { background: white; color: #111; padding: 16px 34px; }
+    .btn-primary:hover { background: #d9d9d9; }
+    body.light .btn-primary { background: #111; color: #fff; }
+    body.light .btn-primary:hover { background: #333; }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,.25);
+      color: white; background: transparent; padding: 14px 28px;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.12); }
+    body.light .btn-outline {
+      border: 1px solid rgba(0,0,0,.25);
+      color: #111;
+    }
+    body.light .btn-outline:hover { background: rgba(0,0,0,.08); }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 2.5rem; max-width: 900px; margin: 0 auto; }
+    .section-label { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    h2 strong { font-weight: 600; }
+    .section-intro { color: var(--muted); max-width: 540px; margin-bottom: 3.5rem; font-weight: 300; }
+    .divider { border: none; border-top: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
+
+    /* ── CARDS ── */
+    .projects { display: flex; flex-direction: column; gap: 2rem; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 2.25rem; display: grid; grid-template-columns: 1fr auto;
+      gap: 1.5rem; align-items: start;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card:hover::before { opacity: 1; }
+    .card:hover { border-color: rgba(255,255,255,.25); transform: translateY(-2px); }
+    body.light .card:hover { border-color: rgba(0,0,0,.25); }
+    .card-num { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); margin-bottom: 0.5rem; }
+    .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.3; }
+    .card-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; font-weight: 300; }
+    .stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+    .tag { font-family: var(--mono); font-size: 0.7rem; padding: 0.2rem 0.55rem; border-radius: 3px; font-weight: 400; }
+    .tag-sql    { background: rgba(0,212,255,.08);  color: #67e8f9; border: 1px solid rgba(0,212,255,.2); }
+    .tag-python { background: rgba(59,130,246,.1);  color: #93c5fd; border: 1px solid rgba(59,130,246,.25); }
+    .tag-bi     { background: rgba(251,191,36,.08); color: #fcd34d; border: 1px solid rgba(251,191,36,.2); }
+    .tag-purple { background: rgba(124,58,237,.1);  color: #c4b5fd; border: 1px solid rgba(124,58,237,.25); }
+    
+    /* Light mode: tags clearly visible */
+body.light .tag-sql    { background: rgba(0,150,180,.12); color: #0077aa; border: 1px solid rgba(0,150,180,.35); }
+body.light .tag-python { background: rgba(29,78,216,.1);  color: #1d4ed8; border: 1px solid rgba(29,78,216,.3); }
+body.light .tag-bi     { background: rgba(180,130,0,.1);  color: #92670a; border: 1px solid rgba(180,130,0,.3); }
+body.light .tag-purple { background: rgba(109,40,217,.1); color: #6d28d9; border: 1px solid rgba(109,40,217,.3); }
+    .card-actions { display: flex; gap: 0.75rem; }
+    .card-badge {
+      width: 52px; height: 52px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; flex-shrink: 0;
+    }
+    body.light .card-badge { background: rgba(0,0,0,.06); border-color: rgba(0,0,0,.12); }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+    .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; }
+    .skill-card h4 { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.75rem; }
+    .skill-items { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    /* ── CONTACT ── */
+    .contact-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 3rem; text-align: center; }
+    .contact-box p { color: var(--muted); margin-bottom: 2rem; max-width: 420px; margin-inline: auto; font-weight: 300; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; text-align: center; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+
+    [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    [data-reveal].visible { opacity: 1; transform: none; }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 1.25rem 4rem; }
+      section { padding: 4rem 1.25rem; }
+      .card { grid-template-columns: 1fr; }
+      .card-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+
+  <ul class="nav-links">
+    <li><a href="#projects">Projekte</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+    <li><button id="theme-toggle">🌙</button></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Hicham<br /><span>Boulaayad</span></h1>
+  <p class="hero-sub">
+    Data Analyst mit Erfahrung in SQL, Python, Pandas und Power BI.
+    Ich entwickle Dashboards, analysiere Daten und unterstütze
+    datengetriebene Entscheidungen – von der Rohdaten bis zum fertigen Report.
+  </p>
+  <div class="hero-chips">
+    <span class="chip">SQL</span>
+    <span class="chip">Python</span>
+    <span class="chip">PostgreSQL</span>
+    <span class="chip">Evidence.dev</span>
+    <span class="chip">Power BI</span>
+    <span class="chip">Pandas</span>
+    <span class="chip">GitHub</span>
+  </div>
+  <div class="cta-row">
+    <a href="#projects" class="btn btn-primary">Projekte ansehen</a>
+  </div>
+</div>
+
+<hr class="divider" />
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label" data-reveal>Ausgewählte Projekte</p>
+  <h2 data-reveal><strong>Projekt</strong>arbeit</h2>
+  <div class="projects">
+    <div class="card" data-reveal>
+      <div>
+        <p class="card-num">Projekt 01</p>
+        <h3>Business Analytics Dashboard mit Evidence.dev</h3>
+        <p class="card-desc">Aufbau einer vollständigen Analytics-Umgebung mit SQL Server als Datenquelle und Evidence.dev als Reporting-Framework. Entwicklung von SQL-Abfragen zur Datenaufbereitung und Erstellung interaktiver, codebasierter Dashboards.</p>
+        <div class="stack">
+          <span class="tag tag-sql">SQL Server</span>
+          <span class="tag tag-sql">SQL</span>
+          <span class="tag tag-purple">SQLMesh</span>
+          <span class="tag tag-purple">Evidence.dev</span>
+          <span class="tag tag-purple">Tableau</span>
+        </div>
+        <div class="card-actions">
+          <a href="https://github.com/Hibou10/covid_dashboard" target="_blank" class="btn btn-outline" style="font-size:0.8rem;padding:0.5rem 1rem;">GitHub Repo ↗</a>
+        </div>
+      </div>
+      <div class="card-badge">📊</div>
+    </div>
+    <div class="card" data-reveal>
+      <div>
+        <p class="card-num">Projekt 02</p>
+        <h3>Datenanalyse & Power BI Dashboard</h3>
+        <p class="card-desc">End-to-End Datenprojekt: Datenextraktion aus PostgreSQL, Transformation und Bereinigung mit Python (Pandas) sowie Entwicklung eines professionellen Power BI Dashboards mit KPI-Tracking und interaktiven Filtern.</p>
+        <div class="stack">
+          <span class="tag tag-python">Python</span>
+          <span class="tag tag-python">Pandas</span>
+          <span class="tag tag-sql">PostgreSQL</span>
+          <span class="tag tag-sql">SQL</span>
+          <span class="tag tag-bi">Power BI</span>
+        </div>
+        <div class="card-actions">
+          <a href="https://github.com/Hibou10/customer-shopping-analysis" target="_blank" class="btn btn-outline" style="font-size:0.8rem;padding:0.5rem 1rem;">GitHub Repo ↗</a>
+        </div>
+      </div>
+      <div class="card-badge">🐍</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label" data-reveal>Technologien</p>
+  <h2 data-reveal>Tech <strong>Stack</strong></h2>
+  <div class="skills-grid">
+    <div class="skill-card" data-reveal>
+      <h4>Data Engineering</h4>
+      <div class="skill-items">
+        <span class="tag tag-sql">Python</span>
+        <span class="tag tag-sql">SQL</span>
+        <span class="tag tag-sql">SQLMesh</span>
+        <span class="tag tag-sql">dbt</span>
+        <span class="tag tag-sql">DuckDB</span>
+        <span class="tag tag-sql">Snowflake</span>
+        <span class="tag tag-sql">ETL/ELT</span>
+      </div>
+    </div>
+    <div class="skill-card" data-reveal>
+      <h4>Data Analytics</h4>
+      <div class="skill-items">
+        <span class="tag tag-python">Python</span>
+        <span class="tag tag-python">Pandas</span>
+        <span class="tag tag-python">NumPy</span>
+        <span class="tag tag-python">R</span>
+        <span class="tag tag-python">Scikit-learn</span>
+        <span class="tag tag-python">Seaborn</span>
+        <span class="tag tag-python">ggplot2</span>
+        <span class="tag tag-python">Tidyverse</span>
+      </div>
+    </div>
+    <div class="skill-card" data-reveal>
+      <h4>BI & Data Visualization</h4>
+      <div class="skill-items">
+        <span class="tag tag-bi">Power BI</span>
+        <span class="tag tag-bi">Tableau</span>
+        <span class="tag tag-bi">Evidence.dev</span>
+      </div>
+    </div>
+    <div class="skill-card" data-reveal>
+      <h4>Databases</h4>
+      <div class="skill-items">
+        <span class="tag tag-purple">PostgreSQL</span>
+        <span class="tag tag-purple">MySQL</span>
+        <span class="tag tag-purple">SQL Server</span>
+        <span class="tag tag-purple">DBeaver</span>
+      </div>
+    </div>
+    <div class="skill-card" data-reveal>
+      <h4>Development Tools</h4>
+      <div class="skill-items">
+        <span class="tag tag-purple">Git</span>
+        <span class="tag tag-purple">GitHub</span>
+        <span class="tag tag-purple">VS Code</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-box" data-reveal>
+    <h2 style="margin-bottom:1.5rem"><strong>GET IN TOUCH</strong></h2>
+    <div class="contact-links">
+      <a href="mailto:hboulaayad10@gmail.com" target="_blank" class="btn btn-outline">E-Mail schreiben ↗</a>
+      <a href="https://github.com/Hibou10" target="_blank" class="btn btn-outline">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/hicham-boulaayad-5a873522a/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Hicham Boulaayad · Data Analytics Portfolio · 2026</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+  // Dark / Light Toggle
+  const toggle = document.getElementById('theme-toggle');
+
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    toggle.textContent = '☀️';
+  }
+
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    const isLight = document.body.classList.contains('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    toggle.textContent = isLight ? '☀️' : '🌙';
+  });
+</script>
+</body>
+</html>
