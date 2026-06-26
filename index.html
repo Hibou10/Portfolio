@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hicham Boulaayad · Data Analytics</title>
@@ -69,11 +70,85 @@
     .nav-links a:hover { color: var(--text); }
 
     /* ── THEME TOGGLE ── */
-    #theme-toggle {
-      background: none; border: none; color: var(--text);
-      cursor: pointer; font-size: 20px; padding: 0; transition: transform .3s;
-    }
-    #theme-toggle:hover { transform: scale(1.15); }
+    
+    /* ── THEME SWITCH ── */
+
+/* ===== Theme Switch ===== */
+
+.theme-switch{
+    position:relative;
+    display:inline-block;
+    width:48px;
+    height:24px;
+}
+
+.theme-switch input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    background:#2f2f2f;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:30px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.slider::before{
+    content:"";
+    position:absolute;
+    width:18px;
+    height:18px;
+    left:3px;
+    top:2px;
+    border-radius:50%;
+    background:#ffffff;
+    transition:.3s;
+}
+
+/* Light Mode */
+
+.theme-switch input:checked + .slider{
+    background:#d9d9d9;
+    border:1px solid rgba(0,0,0,.15);
+}
+
+.theme-switch input:checked + .slider::before{
+    transform:translateX(23px);
+    background:#111;
+}
+
+/* Icons */
+
+.icon{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:10px;
+    opacity:.55;
+    transition:.3s;
+    user-select:none;
+}
+
+.sun{
+    left:7px;
+    color:#fff;
+}
+
+.moon{
+    right:7px;
+    color:#fff;
+}
+
+.theme-switch input:checked + .slider .sun{
+    color:#111;
+}
+
+.theme-switch input:checked + .slider .moon{
+    color:#555;
+}
 
     /* ── HERO ── */
     .hero {
@@ -225,27 +300,28 @@ body.light .tag-purple { background: rgba(109,40,217,.1); color: #6d28d9; border
     <li><a href="#projects">Projekte</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Kontakt</a></li>
-    <li><button id="theme-toggle">🌙</button></li>
+    <li>
+    <label class="theme-switch">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider">
+            <span class="icon sun">☀</span>
+<span class="icon moon">☾</span>
+        </span>
+    </label>
+</li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <h1>Hicham<br /><span>Boulaayad</span></h1>
-  <p class="hero-sub">
-    Data Analyst mit Erfahrung in SQL, Python, Pandas und Power BI.
-    Ich entwickle Dashboards, analysiere Daten und unterstütze
-    datengetriebene Entscheidungen – von der Rohdaten bis zum fertigen Report.
+  <p class="hero-sub"><strong>
+    Ich entwickle datengetriebene Lösungen – von der Datenaufbereitung und ETL-Prozessen über SQL-Analysen 
+    bis hin zu interaktiven Dashboards mit Power BI, Tableau und Evidence.dev. Mein Ziel ist es, 
+    komplexe Daten verständlich aufzubereiten und Unternehmen dabei zu unterstützen, 
+    fundierte Entscheidungen auf Basis verlässlicher Daten zu treffen.</strong>
   </p>
-  <div class="hero-chips">
-    <span class="chip">SQL</span>
-    <span class="chip">Python</span>
-    <span class="chip">PostgreSQL</span>
-    <span class="chip">Evidence.dev</span>
-    <span class="chip">Power BI</span>
-    <span class="chip">Pandas</span>
-    <span class="chip">GitHub</span>
-  </div>
+  
   <div class="cta-row">
     <a href="#projects" class="btn btn-primary">Projekte ansehen</a>
   </div>
@@ -255,8 +331,7 @@ body.light .tag-purple { background: rgba(109,40,217,.1); color: #6d28d9; border
 
 <!-- PROJECTS -->
 <section id="projects">
-  <p class="section-label" data-reveal>Ausgewählte Projekte</p>
-  <h2 data-reveal><strong>Projekt</strong>arbeit</h2>
+  <h2 data-reveal><strong>Projekte</strong></h2>
   <div class="projects">
     <div class="card" data-reveal>
       <div>
@@ -294,6 +369,24 @@ body.light .tag-purple { background: rgba(109,40,217,.1); color: #6d28d9; border
       </div>
       <div class="card-badge">🐍</div>
     </div>
+
+    <div class="card" data-reveal>
+      <div>
+        <p class="card-num">Projekt 03</p>
+        <h3>Netflix</h3>
+        <p class="card-desc">Analyse eines Netflix-Datensatzes mit Fokus auf Datenqualität und explorativer Datenanalyse (EDA). Das Projekt umfasste die Bereinigung von Duplikaten, die Identifikation fehlender Werte sowie die Untersuchung der Datenstruktur mit Pandas und Seaborn. Ziel war es, 
+          eine saubere und zuverlässige Datengrundlage für weiterführende Analysen und Visualisierungen zu schaffen.</p>
+        <div class="stack">
+          <span class="tag tag-python">Pandas</span>
+          <span class="tag tag-sql">Seaborn</span>
+          <span class="tag tag-sql">EDA</span>
+        </div>
+        <div class="card-actions">
+          <a href="https://github.com/Hibou10/Netflix-Project" target="_blank" class="btn btn-outline" style="font-size:0.8rem;padding:0.5rem 1rem;">GitHub Repo ↗</a>
+        </div>
+      </div>
+      <div class="card-badge">🐍</div>
+    </div>
   </div>
 </section>
 
@@ -323,7 +416,6 @@ body.light .tag-purple { background: rgba(109,40,217,.1); color: #6d28d9; border
         <span class="tag tag-python">Pandas</span>
         <span class="tag tag-python">NumPy</span>
         <span class="tag tag-python">R</span>
-        <span class="tag tag-python">Scikit-learn</span>
         <span class="tag tag-python">Seaborn</span>
         <span class="tag tag-python">ggplot2</span>
         <span class="tag tag-python">Tidyverse</span>
@@ -384,19 +476,30 @@ body.light .tag-purple { background: rgba(109,40,217,.1); color: #6d28d9; border
   document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
 
   // Dark / Light Toggle
-  const toggle = document.getElementById('theme-toggle');
+  const toggle = document.getElementById("theme-toggle");
 
-  if (localStorage.getItem('theme') === 'light') {
-    document.body.classList.add('light');
-    toggle.textContent = '☀️';
-  }
+if(localStorage.getItem("theme")==="light"){
 
-  toggle.addEventListener('click', () => {
-    document.body.classList.toggle('light');
-    const isLight = document.body.classList.contains('light');
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    toggle.textContent = isLight ? '☀️' : '🌙';
-  });
+    document.body.classList.add("light");
+    toggle.checked=true;
+
+}
+
+toggle.addEventListener("change",()=>{
+
+    document.body.classList.toggle("light");
+
+    if(document.body.classList.contains("light")){
+
+        localStorage.setItem("theme","light");
+
+    }else{
+
+        localStorage.setItem("theme","dark");
+
+    }
+
+});
 </script>
 </body>
 </html>
