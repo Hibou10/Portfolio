@@ -78,9 +78,6 @@ body.light .hero .subtitle{
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
 
-    /* ── THEME TOGGLE ── */
-    
-    /* ── THEME SWITCH ── */
 
 /* ===== Theme Switch ===== */
 
@@ -227,7 +224,7 @@ body.light .hero .subtitle{
     body.light .btn-outline:hover { background: rgba(0,0,0,.08); }
 
     /* ── SECTIONS ── */
-    section { padding: 6rem 2.5rem; max-width: 900px; margin: 0 auto; }
+    section { padding: 6rem 2.5rem; max-width: 1200px; margin: 0 auto; }
     .section-label { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; }
     h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 1rem; }
     h2 strong { font-weight: 600; }
@@ -241,7 +238,7 @@ body.light .hero .subtitle{
       padding: 2.25rem; display: grid; grid-template-columns: 1fr auto;
       gap: 1.5rem; align-items: start;
       transition: border-color 0.2s, transform 0.2s;
-      position: relative; overflow: hidden;
+      position: relative; overflow: visible;
     }
     .card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
@@ -300,26 +297,37 @@ body.light .tag-purple { background: rgba(109,40,217,.1); color: #6d28d9; border
       .card { grid-template-columns: 1fr; }
       .card-badge { display: none; }
     }
+
+    /* Green */
+
+.tag-green{
+
+    color:#22c55e;
+
+    border:1px solid rgba(34,197,94,.35);
+
+    background:rgba(34,197,94,.10);
+
+}
+
+
   </style>
 </head>
 <body>
 
 <nav>
-
   <ul class="nav-links">
     <li><a href="#projects">Projekte</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Kontakt</a></li>
-    <li>
-    <label class="theme-switch">
-        <input type="checkbox" id="theme-toggle">
-        <span class="slider">
-            <span class="icon sun">☀</span>
-<span class="icon moon">☾</span>
-        </span>
-    </label>
-</li>
   </ul>
+  <label class="theme-switch">
+      <input type="checkbox" id="theme-toggle">
+      <span class="slider">
+          <span class="icon sun">☀</span>
+          <span class="icon moon">☾</span>
+      </span>
+  </label>
 </nav>
 
 <!-- HERO -->
@@ -346,7 +354,7 @@ body.light .tag-purple { background: rgba(109,40,217,.1); color: #6d28d9; border
     <div class="card" data-reveal>
       <div>
         <p class="card-num">Projekt 01</p>
-        <h3>Covid-19 Datenanalyse</h3>
+        <h3 style="display:flex; align-items:center; gap:0.5rem;">Covid-19 Datenanalyse <span style="font-size:1.2rem;">🦠</span></h3>
         <p class="card-desc">Aufbau einer vollständigen Analytics-Umgebung mit SQL Server als Datenquelle und Evidence.dev als Reporting-Framework. Entwicklung von SQL-Abfragen zur Datenaufbereitung und Erstellung interaktiver, codebasierter Dashboards.</p>
         <div class="stack">
           <span class="tag tag-purple">ETL</span>
@@ -354,31 +362,54 @@ body.light .tag-purple { background: rgba(109,40,217,.1); color: #6d28d9; border
           <span class="tag tag-purple">DuckDB</span>
           <span class="tag tag-purple">SQL Server</span>
           <span class="tag tag-purple">Evidence.dev</span>
-          <span class="tag tag-purple">Tableau</span>
         </div>
         <div class="card-actions">
           <a href="https://github.com/Hibou10/covid_dashboard" target="_blank" class="btn btn-outline" style="font-size:0.8rem;padding:0.5rem 1rem;">GitHub Repo ↗</a>
         </div>
       </div>
-      <div class="card-badge">🦠</div>
-    </div>
-    <div class="card" data-reveal>
-      <div>
-        <p class="card-num">Projekt 02</p>
-        <h3>Customer Shopping Analyse</h3>
-        <p class="card-desc">End-to-End Datenprojekt: Datenextraktion aus PostgreSQL, Transformation und Bereinigung mit Python (Pandas) sowie Entwicklung eines professionellen Power BI Dashboards mit KPI-Tracking und interaktiven Filtern.</p>
-        <div class="stack">
-          <span class="tag tag-python">Python</span>
-          <span class="tag tag-python">Pandas</span>
-          <span class="tag tag-python">PostgreSQL</span>
-          <span class="tag tag-python">Power BI</span>
-        </div>
-        <div class="card-actions">
-          <a href="https://github.com/Hibou10/customer-shopping-analysis" target="_blank" class="btn btn-outline" style="font-size:0.8rem;padding:0.5rem 1rem;">GitHub Repo ↗</a>
-        </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:0.75rem; flex-shrink:0;">
+        <a href="https://covid-data-insights.netlify.app/" target="_blank" 
+            style="position:relative; display:inline-block; border-radius:8px; overflow:hidden;"
+            onmouseover="this.querySelector('img').style.filter='blur(0px)'; this.querySelector('.overlay').style.opacity='0'"
+            onmouseout="this.querySelector('img').style.filter='blur(3px)'; this.querySelector('.overlay').style.opacity='1'">
+  <img src="images/covid_19 (1).jpg" alt="Covid Dashboard"
+    style="width:320px; height:100%; object-fit:cover; border-radius:8px; border:1px solid var(--border); filter:blur(3px); transition:filter 0.3s; display:block; box-shadow: 0 8px 32px rgba(0,0,0,0.5);"
+  />
+  <div class="overlay" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.35); border-radius:8px; transition:opacity 0.3s;">
+    <span style="color:rgb(246, 242, 242); font-family:var(--mono); font-size:0.75rem; font-weight:600; letter-spacing:0.1em; text-align:center; padding:0 1rem;">Covid Global Dashboard ↗</span>
+  </div>
+</a>
       </div>
-      <div class="card-badge">🛒</div>
     </div>
+   
+    <div class="card" data-reveal>
+  <div>
+    <p class="card-num">Projekt 02</p>
+    <h3>Customer Shopping Analyse <span style="font-size:1.2rem;">🛒</span></h3>
+    <p class="card-desc">Dieses Projekt analysiert das Einkaufsverhalten von Kunden mithilfe von Python, SQL, Power BI und Streamlit. Ziel ist die Durchführung einer explorativen Datenanalyse (EDA), um Kundensegmente zu identifizieren, Umsatztrends zu analysieren, Kaufverhalten zu untersuchen sowie die Performance von Produktkategorien anhand relevanter Kennzahlen und Visualisierungen zu bewerten..</p>
+    <div class="stack">
+      <span class="tag tag-python">Python</span>
+      <span class="tag tag-python">Pandas</span>
+      <span class="tag tag-python">PostgreSQL</span>
+      <span class="tag tag-python">Power BI</span>
+      <span class="tag tag-python">Streamlit</span>
+    </div>
+    <a href="https://github.com/Hibou10/customer-shopping-analysis" target="_blank" class="btn btn-outline" style="font-size:0.8rem;padding:0.5rem 1rem;">GitHub Repo ↗</a>
+  </div>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:0.75rem; flex-shrink:0;">
+        <a href="https://customer-shopping.streamlit.app/" target="_blank" 
+            style="position:relative; display:inline-block; border-radius:8px; overflow:hidden;"
+            onmouseover="this.querySelector('img').style.filter='blur(0px)'; this.querySelector('.overlay').style.opacity='0'"
+            onmouseout="this.querySelector('img').style.filter='blur(3px)'; this.querySelector('.overlay').style.opacity='1'">
+  <img src="images/streamlit-customer-shopping.jpg" alt="Customer Shopping"
+    style="width:320px; height:100%; object-fit:cover; border-radius:8px; border:1px solid var(--border); filter:blur(3px); transition:filter 0.3s; display:block; box-shadow: 0 8px 32px rgba(0,0,0,0.5);"
+  />
+  <div class="overlay" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.35); border-radius:8px; transition:opacity 0.3s;">
+    <span style="color:rgb(246, 242, 242); font-family:var(--mono); font-size:0.75rem; font-weight:600; letter-spacing:0.1em; text-align:center; padding:0 1rem;">Customer Shopping Dashboard ↗</span>
+  </div>
+</a>
+      </div>
+</div>
 
     <div class="card" data-reveal>
       <div>
@@ -451,9 +482,9 @@ body.light .tag-purple { background: rgba(109,40,217,.1); color: #6d28d9; border
     <div class="skill-card" data-reveal>
       <h4>Development Tools</h4>
       <div class="skill-items">
-        <span class="tag tag-purple">Git</span>
-        <span class="tag tag-purple">GitHub</span>
-        <span class="tag tag-purple">VS Code</span>
+        <span class="tag tag-green">Git</span>
+        <span class="tag tag-green">GitHub</span>
+        <span class="tag tag-green">VS Code</span>
       </div>
     </div>
   </div>
